@@ -1,5 +1,6 @@
 # ==============================
 # Point72 Business Analyst Case Study
+# 📞 NYC 311 Service Requests & Weather Analysis 🌦️
 # ==============================
 
 # ==============================
@@ -26,7 +27,7 @@ from datetime import timedelta
 # ==============================
 # Page configuration must be set before any Streamlit commands
 st.set_page_config(
-    page_title="Point72 Business Analyst Case Study",
+    page_title="📞 NYC 311 Service Requests & Weather Analysis 🌦️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -77,12 +78,7 @@ p, div, span, label { font-family: 'Inter', sans-serif; font-weight: 400; line-h
 # ==============================
 st.title("📞 NYC 311 Service Requests & Weather Analysis 🌦️")
 st.markdown(
-"<div style='font-size:12px'><a href='https://grnhse-use1-prod-s2-ghr.s3.amazonaws.com/generic_attachments/attachments/554/877/700/original/311_2018.csv' target='_blank'>NYC 311 Service Requests Dataset (2018)</a></div>",
-unsafe_allow_html=True
-)
-st.markdown(
-"<div style='font-size:12px'><a href='https://grnhse-use1-prod-s2-ghr.s3.amazonaws.com/generic_attachments/attachments/554/877/600/original/weather_df_2018.csv' target='_blank'>NYC Weather Dataset (2018, daily data)</a></div>",
-unsafe_allow_html=True
+    "NYC 311 Service Requests Dataset (2018) and NYC Weather Dataset (2018) analysis case study. ",
 )
 
 # =============================
@@ -2040,17 +2036,7 @@ with tab_forecasting:
     )
 
     st.plotly_chart(fig, use_container_width=True)
-
-# ==============================
-# Export cleaned and merged data
-# ==============================
-    out_dir = Path("output")
-    out_dir.mkdir(exist_ok=True)
-    out_file = out_dir / "calls_with_weather.xlsx"
-    with pd.ExcelWriter(out_file, engine="openpyxl") as writer:
-        calls.to_excel(writer, sheet_name="calls_cleaned", index=False)
-        calls_grouped.to_excel(writer, sheet_name="calls_aggregated", index=False)
-        weather.to_excel(writer, sheet_name="weather_cleaned", index=False)
-        calls_with_weather.to_excel(writer, sheet_name="calls_with_weather", index=False)
-
-    st.success(f"✅ Exported Excel to {out_file.resolve()}")
+    st.caption(
+        "The plot shows the recent 60 days of historical daily 311 call counts (solid line) along with the 7-day forecast (dashed line). "
+        "The forecast incorporates day-of-week patterns, recent baseline demand, a slow trend, and naive weather estimates based on recent averages."
+    )
